@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nimba Community Western Australia</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root { --gold: #D4AF37; --deep-red: #8B0000; --forest-green: #228B22; --black: #1a1a1a; --white: #ffffff; --light-grey: #f5f5f5; }
+        body { line-height: 1.6; color: #333; }
+        
+        /* Header & Navigation */
+        header { background: linear-gradient(135deg, var(--deep-red), #a00000); color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: bold; color: var(--gold); text-decoration: none; }
+        .logo span { color: white; }
+        nav ul { display: flex; list-style: none; gap: 1.5rem; }
+        nav a { color: white; text-decoration: none; font-weight: 500; padding: 0.5rem; border-bottom: 3px solid transparent; transition: all 0.3s; }
+        nav a:hover, nav a.active { border-bottom-color: var(--gold); color: var(--gold); }
+        .menu-toggle { display: none; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
+        
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200') center/cover; min-height: 500px; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 2rem; }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; color: var(--gold); }
+        .hero-content p { font-size: 1.4rem; margin-bottom: 2rem; max-width: 800px; }
+        .tagline { font-size: 1.2rem; font-style: italic; color: #f0d890; margin-bottom: 2rem; }
+        .btn { display: inline-block; padding: 1rem 2rem; background: var(--gold); color: var(--black); text-decoration: none; font-weight: bold; border-radius: 5px; transition: all 0.3s; margin: 0.5rem; }
+        .btn:hover { background: #b8860b; transform: translateY(-3px); }
+        .btn-outline { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+        .btn-outline:hover { background: var(--gold); color: var(--black); }
+        
+        /* Sections */
+        section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; display: none; }
+        section.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+        h2 { font-size: 2.2rem; color: var(--deep-red); margin-bottom: 2rem; text-align: center; border-bottom: 3px solid var(--gold); padding-bottom: 1rem; }
+        h3 { font-size: 1.5rem; color: var(--forest-green); margin: 1.5rem 0 1rem; }
+        .values { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .value-card { background: var(--light-grey); padding: 2rem; border-radius: 10px; text-align: center; border-top: 4px solid var(--forest-green); transition: transform 0.3s; }
+        .value-card:hover { transform: translateY(-10px); }
+        .value-card h3 { color: var(--deep-red); margin-top: 1rem; }
+        
+        /* Welfare Benefits Table */
+        .benefits-table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .benefits-table th, .benefits-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #ddd; }
+        .benefits-table th { background: var(--deep-red); color: white; }
+        .benefits-table tr:hover { background: #f9f9f9; }
+        
+        /* Committee Grid */
+        .committee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .member-card { background: var(--light-grey); padding: 1.5rem; border-radius: 10px; text-align: center; }
+        .member-card .role { font-weight: bold; color: var(--deep-red); }
+        
+        /* Forms */
+        form { background: var(--light-grey); padding: 2rem; border-radius: 10px; max-width: 700px; margin: 2rem auto; }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        input, select, textarea { width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
+        button[type="submit"] { background: var(--forest-green); color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+        button[type="submit"]:hover { background: #1a6b1a; }
+        
+        /* Download Cards */
+        .downloads-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; }
+        .download-card { background: var(--light-grey); padding: 2rem; border-radius: 10px; text-align: center; border-left: 4px solid var(--gold); }
+        .download-icon { font-size: 3rem; color: var(--deep-red); margin-bottom: 1rem; }
+        
+        /* Footer */
+        footer { background: var(--black); color: white; padding: 3rem 2rem; margin-top: 3rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap; }
+        .footer-links a { color: var(--gold); text-decoration: none; }
+        .footer-links a:hover { text-decoration: underline; }
+        .copyright { margin-top: 2rem; color: #888; font-size: 0.9rem; }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav ul { position: absolute; top: 100%; left: 0; right: 0; background: var(--deep-red); flex-direction: column; padding: 1rem; display: none; gap: 0; }
+            nav ul.show { display: flex; }
+            nav li { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2); }
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content p { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER & NAVIGATION -->
+<header>
+    <div class="nav-container">
+        <a href="#" class="logo" onclick="showPage('home')">Nimba <span>Community WA</span></a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                <li><a href="#" onclick="showPage('welfare')">Welfare System</a></li>
+                <li><a href="#" onclick="showPage('events')">Events & Culture</a></li>
+                <li><a href="#" onclick="showPage('membership')">Membership</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ================================= HOME PAGE ================================= -->
+<section id="home" class="active">
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Nimba Community Western Australia</h1>
+            <p class="tagline">"One Family, One Heart — Standing Together in Western Australia"</p>
+            <p>Uniting people of Nimba origin, their families and friends in fellowship, solidarity, and mutual support — celebrating our culture and caring for one another.</p>
+            <div>
+                <a href="#" class="btn" onclick="showPage('membership')">🤝 Join Our Community</a>
+                <a href="#" class="btn btn-outline" onclick="showPage('welfare')">💚 Learn About Welfare</a>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding: 3rem 0; max-width: 1000px; margin: 0 auto;">
+        <h2>Welcome to Our Community</h2>
+        <p style="text-align: center; font-size: 1.1rem;">We are proud members of the Nimba community living in Western Australia — united by our shared heritage, our love for our people, and our commitment to caring for one another, just as we do back home in Nimba County, Liberia.</p>
+        
+        <div class="values">
+            <div class="value-card">
+                <h3>🤝 Unity</h3>
+                <p>We stand together as one family — supporting, encouraging, and uplifting each other.</p>
+            </div>
+            <div class="value-card">
+                <h3>❤️ Solidarity</h3>
+                <p>In times of joy and in times of need — no one walks alone. We share both burdens and blessings.</p>
+            </div>
+            <div class="value-card">
+                <h3>🏛️ Culture</h3>
+                <p>We preserve and celebrate our Nimba traditions, languages, and heritage — passing them to the next generation.</p>
+            </div>
+            <div class="value-card">
+                <h3>💚 Mutual Care</h3>
+                <p>Through our Welfare System, we ensure no member faces loss or hardship without the support of the community.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================= ABOUT US PAGE ================================= -->
+<section id="about">
+    <h2>About Us</h2>
+    
+    <h3>Our Story</h3>
+    <p>The Nimba Community Western Australia was established to bring together people of Nimba origin and descent, along with our families and friends, who have made Western Australia our home. Far from our beloved Nimba County in Liberia, we found that our greatest strength lies in staying connected — to our culture, to our people, and to each other.</p>
+    <br>
+    <p>We are a voluntary, non-political, non-profit cultural and social association. Our members live across WA, coming together in fellowship, celebration, and mutual support. Whether we are celebrating our heritage through cultural events, supporting one another through difficult times, or contributing back to our communities in Australia and Nimba — we remain true to the values that define us.</p>
+    
+    <h3>Our Purpose & Objectives</h3>
+    <ul style="margin: 1.5rem; line-height: 1.8;">
+        <li>✅ Unite people of Nimba origin, their descendants, families and friends in fellowship and mutual support</li>
+        <li>✅ Preserve, promote and celebrate the cultural heritage, languages and traditions of Nimba</li>
+        <li>✅ Operate our Welfare System to provide practical and financial support to members in times of loss or celebration</li>
+        <li>✅ Foster cooperation and friendship with other Liberian, African and multicultural communities in WA</li>
+        <li>✅ Support charitable and development initiatives in Nimba County, Liberia</li>
+        <li>✅ Promote the welfare, dignity and advancement of our members within the Australian community</li>
+    </ul>
+
+    <h3>Our Executive Committee</h3>
+    <p>Our community is led by an elected Executive Committee serving a two-year term. All office-bearers serve on a voluntary basis.</p>
+    
+    <div class="committee-grid">
+        <div class="member-card"><p class="role">President</p><p>[Name]</p></div>
+        <div class="member-card"><p class="role">Vice-President</p><p>[Name]</p></div>
+        <div class="member-card"><p class="role">Secretary</p><p>[Name]</p></div>
+        <div class="member-card"><p class="role">Assistant Secretary</p><p>[Name]</p></div>
+        <div class="member-card"><p class="role">Treasurer</p><p>[Name]</p></div>
+        <div class="member-card"><p class="role">Welfare Chairperson</p><p>[Name]</p></div>
+        <div class="member-card"><p class="role">Cultural Officer</p><p>[Name]</p></div>
+        <div class="member-card"><p class="role">Public Relations Officer</p><p>[Name]</p></div>
+    </div>
+
+    <h3>Official Documents</h3>
+    <p>Our Constitution, Welfare System Policy and Community Policy have been formally adopted and govern all our operations.</p>
+    
+    <div class="downloads-grid">
+        <div class="download-card">
+            <div class="download-icon">📄</div>
+            <h4>Constitution</h4>
+            <p>Our governing charter — rules, structure, and purpose</p>
+            <a href="#" class="btn" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Download PDF</a>
+        </div>
+        <div class="download-card">
+            <div class="download-icon">💚</div>
+            <h4>Welfare System Policy</h4>
+            <p>How our mutual support fund operates</p>
+            <a href="#" class="btn" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Download PDF</a>
+        </div>
+        <div class="download-card">
+            <div class="download-icon">📋</div>
+            <h4>Community Policy</h4>
+            <p>Operational rules, conduct and compliance</p>
+            <a href="#" class="btn" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Download PDF</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================================= WELFARE SYSTEM PAGE ================================= -->
+<section id="welfare">
+    <h2>Nimba Community Welfare System</h2>
+    
+    <p style="text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto 2rem;">Our Welfare System is the heart of our community — a mutual support fund where every member contributes a small amount regularly, so that when any member faces loss or celebrates a major milestone, the whole community stands with them.</p>
+
+    <h3>How It Works</h3>
+    <ul style="margin: 1.5rem; line-height: 1.8;">
+        <li><strong>Contribution:</strong> Each participating member contributes <strong>$20–$25 AUD per fortnight</strong> (exact amount confirmed at the Adoption Meeting).</li>
+        <li><strong>Waiting Period:</strong> Benefits become available after <strong>3 months</strong> from the date of registration and first contribution.</li>
+        <li><strong>Eligibility:</strong> You must be a financial Ordinary Member of the Community and remain up to date with contributions.</li>
+        <li><strong>Voluntary:</strong> Membership in the Welfare System is voluntary — you may join the Community without joining the Welfare System.</li>
+    </ul>
+
+    <h3>Benefits at a Glance</h3>
+    <table class="benefits-table">
+        <tr><th>Event</th><th>Maximum Benefit Payable</th></tr>
+        <tr><td>Death of a participating member</td><td>Up to $5,000 AUD</td></tr>
+        <tr><td>Death of an immediate family member of a participant</td><td>Up to $5,000 AUD</td></tr>
+        <tr><td>Graduation of a participating member</td><td>Up to $2,000 AUD</td></tr>
+        <tr><td>Graduation of an immediate family member</td><td>Up to $2,000 AUD</td></tr>
+    </table>
+    <p style="font-size: 0.9rem; color: #666; margin-top: -1rem;">* Immediate family: spouse/partner, children, parents, siblings. Other relationships considered at the Committee's discretion. Benefits are maximum amounts and are subject to Fund capacity, verification, and compliance with Policy.</p>
+
+    <h3>How to Make a Claim</h3>
+    <ol style="margin: 1.5rem; line-height: 1.8;">
+        <li>Download and complete the <strong>Welfare Claim Form</strong> below</li>
+        <li>Attach supporting documentation (death certificate, funeral notice, graduation certificate)</li>
+        <li>Submit to the Welfare Chairperson in person or via email</li>
+        <li>Your claim will be verified and reviewed within 14 days</li>
+        <li>Payment is made by direct bank transfer upon approval — signed by two authorised officers</li>
+    </ol>
+
+    <div style="background: #e8f4ea; padding: 2rem; border-radius: 10px; text-align: center; margin-top: 2rem;">
+        <h3>Documents & Forms</h3>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+            <a href="#" class="btn" style="background: var(--forest-green); color: white;">📄 Welfare Policy PDF</a>
+            <a href="#" class="btn" style="background: var(--gold); color: black;">📝 Claim Form PDF</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================================= EVENTS & CULTURE PAGE ================================= -->
+<section id="events">
+    <h2>Culture & Events</h2>
+    
+    <h3>Our Culture</h3>
+    <p>Nimba County is home to diverse ethnic groups including the Dan, Mano, Kpelle, Loma, and many others — each with rich languages, traditions, music, dance, and storytelling. Here in WA, we keep our culture alive through our gatherings, celebrations, and the way we support one another.</p>
+    <p>Our Cultural Officer organises events that celebrate our heritage — from traditional ceremonies and cultural days to music, dance, and sharing our stories with the younger generation born here in Australia.</p>
+
+    <h3>Upcoming Events</h3>
+    <div style="background: var(--light-grey); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+        <p style="text-align: center; font-size: 1.1rem; color: #666;">📅 Check back soon for upcoming events, meetings and celebrations!</p>
+        <p style="text-align: center;">Or follow our WhatsApp group for the latest updates.</p>
+    </div>
+
+    <h3>Past Events & Gallery</h3>
+    <p>Photos from our gatherings will be displayed here — celebrating together as one family.</p>
+</section>
+
+<!-- ================================= MEMBERSHIP PAGE ================================= -->
+<section id="membership">
+    <h2>Join Our Community</h2>
+    
+    <p style="text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto 2rem;">Membership in Nimba Community WA opens the door to friendship, support, cultural connection, and the comfort of knowing you are part of a family away from home.</p>
+
+    <h3>Membership Categories</h3>
+    <table class="benefits-table">
+        <tr><th>Category</th><th>Who Can Join</th><th>Annual Fee</th><th>Voting Rights</th></tr>
+        <tr><td><strong>Ordinary Member</strong></td><td>18+ years, Nimba origin/descent or spouse/partner, WA resident</td><td>$20</td><td>✅ Full voting rights & can hold office</td></tr>
+        <tr><td><strong>Associate Member</strong></td><td>Supporters who do not qualify as Ordinary Members</td><td>$10</td><td>❌ No voting rights</td></tr>
+        <tr><td><strong>Honorary Member</strong></td><td>Conferred by General Meeting for distinguished service</td><td>Free</td><td>❌ No voting rights</td></tr>
+    </table>
+
+    <h3>Welfare System Participation</h3>
+    <p>Ordinary Members may choose to join our Welfare System for an additional <strong>$20–$25 per fortnight</strong>. This is voluntary — you can be a full Community member without joining the Welfare System.</p>
+
+    <h3>How to Join — 3 Simple Steps</h3>
+    <ol style="margin: 1.5rem; line-height: 1.8;">
+        <li><strong>Complete the Membership Application Form</strong> below — provide your full details, contact information and emergency contact</li>
+        <li><strong>Submit your form</strong> to the Secretary — in person at a meeting or via email</li>
+        <li><strong>Payment of membership fee</strong> — your application will be reviewed and confirmed within 14 days</li>
+    </ol>
+
+    <h3 style="text-align: center; margin-top: 3rem;">Online Application Form</h3>
+    <form onsubmit="alert('Thank you! Your application has been submitted. We will contact you within 14 days.'); return false;">
+        <div class="form-group">
+            <label>Title & Full Name *</label>
+            <input type="text" required placeholder="e.g. Mr John Doe">
+        </div>
+        <div class="form-group">
+            <label>Date of Birth *</label>
+            <input type="date" required>
+        </div>
+        <div class="form-group">
+            <label>Full Address *</label>
+            <input type="text" required placeholder="Street address, Suburb, State, Postcode">
+        </div>
+        <div class="form-group">
+            <label>Mobile Phone *</label>
+            <input type="tel" required placeholder="e.g. 0412 345 678">
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+            <label>Emergency Contact Name & Relationship *</label>
+            <input type="text" required placeholder="e.g. Jane Doe — Sister">
+        </div>
+        <div class="form-group">
+            <label>Emergency Contact Phone *</label>
+            <input type="tel" required>
+        </div>
+        <div class="form-group">
+            <label>Membership Class *</label>
+            <select required>
+                <option value="">Please select</option>
+                <option value="ordinary">Ordinary Member ($20/year)</option>
+                <option value="associate">Associate Member ($10/year)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you wish to join the Welfare System? *</label>
+            <select required>
+                <option value="">Please select</option>
+                <option value="yes">Yes — I want to join the Welfare System</option>
+                <option value="no">No — Community membership only</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>I declare that I have read and agree to abide by the Constitution and Community Policy of Nimba Community Western Australia *</label>
+            <select required>
+                <option value="">Please confirm</option>
+                <option value="agree">I Agree</option>
+            </select>
+        </div>
+        <button type="submit">📤 Submit Application</button>
+    </form>
+</section>
+
+<!-- ================================= CONTACT PAGE ================================= -->
+<section id="contact">
+    <h2>Contact Us</h2>
+    
+    <div style="max-width: 700px; margin: 0 auto;">
+        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 3rem;">We'd love to hear from you — whether you're a new member, have a question, or want to get involved.</p>
+        
+        <div style="background: var(--light-grey); padding: 2rem; border-radius: 10px; margin-bottom: 2rem;">
+            <p><strong>📧 Email:</strong> info@nimbacommunitywa.org.au</p>
+            <p><strong>📞 Phone:</strong> [Insert Contact Number]</p>
+            <p><strong>📍 Western Australia</strong> — Meetings held at various venues, notified to members in advance</p>
+            <p><strong>Social Media:</strong> Follow us on Facebook & WhatsApp for updates</p>
+        </div>
+
+        <h3 style="text-align: center;">Send Us a Message</h3>
+        <form onsubmit="alert('Message sent! We will get back to you as soon as possible.'); return false;">
+            <div class="form-group">
+                <label>Your Name *</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Email or Phone *</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" placeholder="e.g. Membership enquiry">
+            </div>
+            <div class="form-group">
+                <label>Your Message *</label>
+                <textarea rows="5" required placeholder="How can we help you?"></textarea>
+            </div>
+            <button type="submit">✉️ Send Message</button>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <h3 style="color: var(--gold); margin-bottom: 1rem;">Nimba Community Western Australia</h3>
+    <p>"One Family, One Heart — Standing Together in Western Australia"</p>
+    <div class="footer-links">
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('about')">About</a>
+        <a href="#" onclick="showPage('welfare')">Welfare</a>
+        <a href="#" onclick="showPage('events')">Events</a>
+        <a href="#" onclick="showPage('membership')">Membership</a>
+        <a href="#" onclick="showPage('contact')">Contact</a>
+    </div>
+    <p class="copyright">© 2025 Nimba Community Western Australia. All Rights Reserved.<br>
+    A voluntary, non-political, non-profit cultural and social association.</p>
+</footer>
+
+<!-- JAVASCRIPT FOR NAVIGATION -->
+<script>
+function showPage(pageId) {
+    // Hide all sections
+    document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+    // Show selected section
+    document.getElementById(pageId).classList.add('active');
+    // Update nav active state
+    document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+    event.target.classList.add('active');
+    // Close mobile menu
+    document.getElementById('nav-menu').classList.remove('show');
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+function toggleMenu() {
+    document.getElementById('nav-menu').classList.toggle('show');
+}
+</script>
+
+</body>
+</html>
